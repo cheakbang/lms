@@ -6,10 +6,10 @@ import {
   apiGetQuestionsForExam,
   apiGetAllExamQuestions,
   apiGetCompletedContentHistories,
-} from "../RestApi";
-import { formatTime } from "../Util/util";
+} from "../../RestApi";
+import { formatTime } from "../../Util/util";
 import { useEffect, useState, useContext } from "react";
-import { AuthContext } from "../../AuthContext";
+import { AuthContext } from "../../../AuthContext";
 
 const Container = styled.div`
   .content.completed {
@@ -31,7 +31,7 @@ const TaskWrapper = styled.div`
   font-size: 14px;
 `;
 
-export function CourseCurriculem() {
+export function MemberCourseCurriculem() {
   const { courseId } = useParams();
   const [content, setContent] = useState([]);
   const [completedContents, setCompletedContents] = useState([]);
@@ -110,7 +110,7 @@ export function CourseCurriculem() {
               </StyledNavLink>
               <TaskWrapper>
                 <span>{item.contentId}-1 과제</span>
-                <StyledNavLink to="/testexam2">풀기</StyledNavLink>
+                <StyledNavLink to="/testexam">풀기</StyledNavLink>
               </TaskWrapper>
             </div>
           );

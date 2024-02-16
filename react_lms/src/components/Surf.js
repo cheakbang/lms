@@ -51,7 +51,7 @@ import { Contact } from "./Contact.js";
 import { ContentComponent } from "./Subject/MemberCourse/Contents/ContentComponent.js";
 import { Exam } from "./Subject/MemberCourse/Contents/Exam/Exam.js";
 import { ExamAnswer } from "./Subject/MemberCourse/Contents/Exam/ExamAnswer.js";
-import { CourseCurriculem } from "./Subject/CourseCurriculum.js";
+import { MemberCourseCurriculem } from "./Subject/MemberCourse/MemberCourseCurriculum.js";
 import { Announcement } from "./Community/Announcement.js";
 import { CourseReview } from "./Community/CourseReview.js";
 import { HallofFame } from "./Community/HallofFame.js";
@@ -94,7 +94,7 @@ export function Surf() {
                     <Route index element={<CourseDetail />} />
                     <Route
                       path="/course/:courseId/curriculum"
-                      element={<CourseCurriculem />}
+                      element={<MemberCourseCurriculem />}
                     />
                     <Route path="afterinquiries" element={<AfterInquiries />} />
                     <Route
@@ -186,6 +186,7 @@ export function Surf() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/subject" element={<TestSubject />} />
+                <Route path="/testexam" element={<Exam />} />
                 <Route path="/testexam2" element={<ExamAnswer />} />
                 <Route
                   path="/course/:courseId/content/:contentId"

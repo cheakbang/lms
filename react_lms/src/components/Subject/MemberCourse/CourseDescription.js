@@ -9,6 +9,7 @@ import {
 } from "../../RestApi";
 import { AuthContext } from "../../../AuthContext";
 import { formatDateTime } from "../../Util/util";
+import { MemberCourseReview } from "./MemberCourseReview";
 
 const Container = styled.div`
   width: 100%;
@@ -141,45 +142,7 @@ export function CourseDescription() {
             </ListBox>
           </DescriptionBox>
           <ReviewBox id="review">
-            <p>
-              <strong>수강평</strong>
-            </p>
-            <InputBox onSubmit={handleSubmit}>
-              <input
-                type="text"
-                placeholder="다른 수강생들이 볼 수 있게 수강 후기와 별점을 남겨 주세요"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              />
-              <select
-                value={rating}
-                onChange={(e) => setRating(e.target.value)}
-              >
-                <option value="0">별점 선택</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-              <button type="submit">등록</button>
-            </InputBox>
-            <Reviews>
-              <colgroup>
-                <col style={{ width: 130 + "px" }} />
-                <col style={{ width: 300 + "px" }} />
-                <col style={{ width: 130 + "px" }} />
-                <col style={{ width: 130 + "px" }} />
-              </colgroup>
-              {reviews.map((review, index) => (
-                <Review key={index}>
-                  <td className="name">{review.member.name}</td>
-                  <td className="reviewText">{review.comment}</td>
-                  <td className="starRating">{review.rating}</td>
-                  <td className="time">{formatDateTime(review.reviewDate)}</td>
-                </Review>
-              ))}
-            </Reviews>
+            <MemberCourseReview />
           </ReviewBox>
         </div>
       </Container>

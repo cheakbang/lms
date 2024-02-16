@@ -9,7 +9,9 @@ import {
   apiGetMyCourseHistroies,
 } from "../../RestApi";
 import { AuthContext } from "../../../AuthContext";
-import { CourseCurriculem } from "../CourseCurriculum";
+import { UserCourseCurriculem } from "./UserCourseCurriculum";
+import { UserCourseReview } from "./UserCourseReview";
+import { UserCourseDescription } from "./UserCourseDescription";
 
 const Container = styled.div`
   width: 100%;
@@ -29,6 +31,7 @@ export function UserCourse() {
   const { courseId } = useParams();
   const [course, setCourse] = useState([]);
   const [content, setContent] = useState([]);
+  const [courseReview, setCourseReview] = useState([]);
 
   // courseId로 course 조회
   useEffect(() => {
@@ -58,20 +61,18 @@ export function UserCourse() {
   //핸들러 이용해서 버튼 누를 때마다 위치 조정
   return (
     <>
-      {course && content && (
+      {course && content && courseReview && (
         <>
           <Container>
             <ContentBox>
               <Section id="description">
-                <h1>강의 소개</h1>
-                <p>{course.description}</p>
+                <UserCourseDescription />
               </Section>
               <Section id="content">
-                <CourseCurriculem />
+                <UserCourseCurriculem />
               </Section>
               <Section id="review">
-                <h1>수강평</h1>
-                <p>{course.description}</p>
+                <UserCourseReview />
               </Section>
             </ContentBox>
           </Container>

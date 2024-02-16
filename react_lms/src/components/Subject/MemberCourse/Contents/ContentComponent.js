@@ -10,7 +10,7 @@ import {
 import { Icon } from "@iconify/react";
 import thumbnail from "../../../image/Thumbnail.jpg";
 import { formatTimeSeconds } from "../../../Util/util";
-import { CourseCurriculem } from "../../CourseCurriculum";
+import { MemberCourseCurriculem } from "../MemberCourseCurriculum";
 
 const Container = styled.div`
   width: 100%;
@@ -123,7 +123,7 @@ const Curriculem = styled.div`
     padding: 1rem;
   }
 `;
-export const StyledCourseCurriculem = styled(CourseCurriculem)`
+export const StyledCourseCurriculem = styled(MemberCourseCurriculem)`
   &.active {
     color: red;
   }
@@ -260,7 +260,7 @@ export function ContentComponent() {
         </button>
       </div>
       <Curriculem>
-        <CourseCurriculem />
+        <MemberCourseCurriculem />
       </Curriculem>
     </Container>
   );

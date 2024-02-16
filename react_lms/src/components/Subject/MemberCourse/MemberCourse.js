@@ -8,6 +8,7 @@ import {
   apiGetMyCourseHistroies,
   apiGetQnABoardsByMember,
   apiGetQnARepliesByQnABoardId,
+  apiGetQnABoardsByCourse,
 } from "../../RestApi";
 import { NavLink } from "react-router-dom";
 import { CourseTitle } from "../CourseTitle";
@@ -15,7 +16,7 @@ import { AuthContext } from "../../../AuthContext";
 import { formatDateTime, fo, formatTime } from "../../Util/util";
 import { Icon } from "@iconify/react";
 import { ProgressBar } from "react-bootstrap";
-import { CourseCurriculem } from "../CourseCurriculum";
+import { MemberCourseCurriculem } from "./MemberCourseCurriculum";
 
 const Container = styled.div`
   width: 100%;
@@ -131,10 +132,14 @@ export function MemberCourse() {
 
   // 로그인 유저의 질문 댓글 조회
   useEffect(() => {
-    apiGetQnABoardsByMember(memberId).then(async (response) => {
+    apiGetQnABoardsByCourse(courseId).then(async (response) => {
       const fetchedQnas = response.data.data;
+      const filteredQnas = fetchedQnas.filter(
+        (qna) => qna.member.memberId === memberId
+      );
+      // 현재 로그인한 사용자가 작성한 QnA만 필터링
       await Promise.all(
-        fetchedQnas.map((qna) => {
+        filteredQnas.map((qna) => {
           return apiGetQnARepliesByQnABoardId(qna.qnaId).then((response) => {
             if (response.data.data.length > 0) {
               setReplies((prevReplies) => ({
@@ -145,7 +150,7 @@ export function MemberCourse() {
           });
         })
       );
-      setQnas(fetchedQnas);
+      setQnas(filteredQnas);
     });
   }, []);
 
@@ -212,7 +217,10 @@ export function MemberCourse() {
                 .map((qna, index) => (
                   <React.Fragment key={index}>
                     <QnA>
-                      <p className="reviewText">{qna.questionText}</p>
+                      <p className="reviewText">
+                        Q: {qna.questionText}
+                        {/* {qna.member && ` by ${qna.member.name}`} */}
+                      </p>
                       <p className="time">{formatDateTime(qna.createdAt)}</p>
                       {replies[qna.qnaId] && replies[qna.qnaId].length > 0 ? (
                         <button onClick={() => handleLoadReplies(qna.qnaId)}>
@@ -226,7 +234,10 @@ export function MemberCourse() {
                       <QnA>
                         {replies[qna.qnaId] &&
                           replies[qna.qnaId].map((reply) => (
-                            <p key={reply.replyId}>{reply.replyText}</p>
+                            <p key={reply.replyId}>
+                              A: {reply.replyText}
+                              {reply.member && ` by ${reply.member.name}`}
+                            </p>
                           ))}
                       </QnA>
                     )}
@@ -272,7 +283,7 @@ export function MemberCourse() {
               </Section>
             ))}
           <Section className="contents">
-            <CourseCurriculem />
+            <MemberCourseCurriculem />
           </Section>
         </DashboardWrap>
       </Container>
